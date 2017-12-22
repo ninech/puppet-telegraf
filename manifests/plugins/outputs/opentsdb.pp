@@ -37,7 +37,7 @@ class telegraf::plugins::outputs::opentsdb (
   file { "${::telegraf::config_directory}/01-opentsdb.conf":
     ensure  => file,
     content => template('telegraf/plugins/outputs/01-opentsdb.conf.erb'),
-    mode    => '0644',
+    mode    => '0640',
     owner   => 'root',
     group   => 'telegraf',
     notify  => Service['telegraf'];
