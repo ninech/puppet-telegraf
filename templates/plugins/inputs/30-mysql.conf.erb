@@ -14,5 +14,71 @@
   #    root:passwd@tcp(127.0.0.1:3306)/?tls=false
   #    root@tcp(127.0.0.1:3306)/?tls=false
   #
-  # If no servers are specified, then localhost is used as the host.
-  servers = ["tcp(127.0.0.1:3306)/"]
+  ## If no servers are specified, then localhost is used as the host.
+<%- if @username -%>
+<%- if @password -%>
+  servers = ["<%= @username %>:<%= @password %>@tcp(<%= @host %>:<%= @port %>)/?tls=<%= @tls %>"]
+<%- else -%>
+  servers = ["<%= @username %>@tcp(<%= @host %>:<%= @port %>)/?tls=<%= @tls %>"]
+<%- end -%>
+<%- else -%>
+  servers = ["tcp(<%= @host %>:<%= @port %>)/?tls=<%= @tls %>"]
+<%- end -%>
+<%- if @interval -%>
+
+# we change the interval here, as it might cost too much performance to execute the statements too often
+interval = "<%= @interval %>"
+
+<%- end -%>
+## the limits for metrics form perf_events_statements
+perf_events_statements_digest_text_limit  = 120
+perf_events_statements_limit              = 250
+perf_events_statements_time_limit         = 86400
+#
+## if the list is empty, then metrics are gathered from all database tables
+table_schema_databases                    = [<%= @databases.join(',') %>]
+#
+## gather metrics from INFORMATION_SCHEMA.TABLES for databases provided above list
+gather_table_schema                       = false
+#
+## gather thread state counts from INFORMATION_SCHEMA.PROCESSLIST
+gather_process_list                       = true
+#
+## gather auto_increment columns and max values from information schema
+gather_info_schema_auto_inc               = false
+#
+## gather metrics from SHOW SLAVE STATUS command output
+gather_slave_status                       = true
+#
+## gather metrics from SHOW BINARY LOGS command output
+gather_binary_logs                        = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.TABLE_IO_WAITS_SUMMART_BY_TABLE
+gather_table_io_waits                     = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.TABLE_LOCK_WAITS
+gather_table_lock_waits                   = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.TABLE_IO_WAITS_SUMMART_BY_INDEX_USAGE
+gather_index_io_waits                     = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.EVENT_WAITS
+gather_event_waits                        = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.FILE_SUMMARY_BY_EVENT_NAME
+gather_file_events_stats                  = false
+#
+## gather metrics from PERFORMANCE_SCHEMA.EVENTS_STATEMENTS_SUMMARY_BY_DIGEST
+gather_perf_events_statements             = false
+#
+## Some queries we may want to run less often (such as SHOW GLOBAL VARIABLES)
+interval_slow                             = "<%= @interval_slow %>"
+
+<%- if @fieldpass.kind_of?(Array) and not @fieldpass.empty? -%>
+## allow only the following fields to be sent to the output
+fieldpass = [
+<%- @fieldpass.each do |field| -%>
+"<%= field %>",
+<%- end -%>
+]
+<%- end -%>

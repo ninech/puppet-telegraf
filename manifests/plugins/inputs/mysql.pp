@@ -18,6 +18,15 @@
 #
 class telegraf::plugins::inputs::mysql (
   # [mysql] section of telegraf.conf
+  $host                          = '127.0.0.1',
+  $port                          = 3306,
+  $username                      = undef,
+  $password                      = undef,
+  $tls                           = false,
+  $interval                      = undef,
+  $interval_slow                 = '30m',
+  $fieldpass                     = [],
+  $databases                     = [],
 )
 {
 
