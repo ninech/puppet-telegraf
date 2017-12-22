@@ -12,6 +12,9 @@
 # [*opentsdb_port*]
 #  opentsdb port
 #
+# [*opentsdb_method*]
+#  opentsdb method, either tcp or http, default 'tcp'
+#
 # [*opentsdb_prefix*]
 #  opentsdb metric prefix
 #
@@ -31,6 +34,7 @@ class telegraf::plugins::outputs::opentsdb (
   # [outputs.opentsdb] section of telegraf.conf
   $opentsdb_server = 'my.opentsdb.server.domain.com',
   $opentsdb_port   = 4242,
+  $opentsdb_method = 'tcp',
   $opentsdb_prefix = 'my.metrics.telegraf.',
 ){
 

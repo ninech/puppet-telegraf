@@ -12,7 +12,7 @@
 
   ## Telnet Mode ##
   # DNS name of the OpenTSDB server in telnet mode
-  host = "<%= @opentsdb_server %>"
+  host = "<%= @opentsdb_method %>://<%= @opentsdb_server %>"
 
   # Port of the OpenTSDB server in telnet mode
   port = <%= @opentsdb_port %>
