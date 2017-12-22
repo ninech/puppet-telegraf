@@ -32,7 +32,7 @@ class telegraf::plugins::inputs::mysql (
 
   file { "${::telegraf::config_directory}/30-mysql.conf":
     ensure  => file,
-    content => template('telegraf/plugins/30-mysql.conf.erb'),
+    content => template('telegraf/plugins/inputs/30-mysql.conf.erb'),
     mode    => '0644',
     owner   => 'root',
     group   => 'telegraf',
