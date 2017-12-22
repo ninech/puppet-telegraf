@@ -4,19 +4,25 @@
 #                         OUTPUT PLUGIN OPENTSDB                              #
 ###############################################################################
 
-# Configuration for opentsdb server to send metrics to
+# Configuration for OpenTSDB server to send metrics to
 [[outputs.opentsdb]]
-
-  # prefix for metrics keys
+  ## prefix for metrics keys
   prefix = "<%= @opentsdb_prefix %>"
 
-  ## Telnet Mode ##
-  # DNS name of the OpenTSDB server in telnet mode
+  ## DNS name of the OpenTSDB server
+  ## Using "opentsdb.example.com" or "tcp://opentsdb.example.com" will use the
+  ## telnet API. "http://opentsdb.example.com" will use the Http API.
   host = "<%= @opentsdb_method %>://<%= @opentsdb_server %>"
 
-  # Port of the OpenTSDB server in telnet mode
+  ## Port of the OpenTSDB server
   port = <%= @opentsdb_port %>
 
-  # Debug true - Prints OpenTSDB communication
-  # debug = true
+  ## Number of data points to send to OpenTSDB in Http requests.
+  ## Not used with telnet API.
+  httpBatchSize = 50
 
+  ## Debug true - Prints OpenTSDB communication
+  debug = false
+
+  ## Separator separates measurement name from field
+  separator = "_"
